@@ -32,7 +32,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button cameraBtn;
+    Button cameraBtn, compileBtn;
     ImageView imageView;
     TextView textView;
     Bitmap bitmap;
@@ -47,6 +47,19 @@ public class MainActivity extends AppCompatActivity {
         textView = (TextView) findViewById(R.id.textView);
         cameraBtn = findViewById(R.id.cameraBtn);
         et_name = (EditText) findViewById(R.id.et_name);
+        compileBtn = (Button) findViewById(R.id.compileBtn);
+        compileBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String onlineIDE = "https://www.codechef.com/ide";
+                Uri web_address = Uri.parse(onlineIDE);
+
+                Intent gotoCompiler = new Intent(Intent.ACTION_VIEW, web_address);
+                if (gotoCompiler.resolveActivity(getPackageManager()) != null){
+                    startActivity(gotoCompiler);
+                }
+            }
+        });
 
         cameraBtn.setOnClickListener(new View.OnClickListener() {
             @Override
