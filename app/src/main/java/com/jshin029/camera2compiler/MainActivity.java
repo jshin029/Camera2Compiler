@@ -43,11 +43,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        imageView = (ImageView) findViewById(R.id.imageView);
-        textView = (TextView) findViewById(R.id.textView);
+        imageView = findViewById(R.id.imageView);
+        textView =  findViewById(R.id.textView);
         cameraBtn = findViewById(R.id.cameraBtn);
-        et_name = (EditText) findViewById(R.id.et_name);
-        compileBtn = (Button) findViewById(R.id.compileBtn);
+        et_name = findViewById(R.id.et_name);
+        compileBtn = findViewById(R.id.compileBtn);
         compileBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -164,8 +164,11 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK)
         {
-            //assert data != null;
-            Uri uri = data.getData();
+
+            Uri uri = null;
+            if (data != null) {
+                uri = data.getData();
+            }
             try
             {
                 bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(),uri);
@@ -177,9 +180,14 @@ public class MainActivity extends AppCompatActivity {
         }
         else if (requestCode == REQUEST_IMAGE_GALLERY && resultCode == RESULT_OK) {
             //assert data != null;
-            Bundle extras = data.getExtras();
-            bitmap = (Bitmap) extras.get("data");
-            imageView.setImageBitmap(bitmap);
+            Bundle extras;
+            if (data != null) {
+                extras = data.getExtras();
+                if (extras != null) {
+                    bitmap = (Bitmap) extras.get("data");
+                }
+                imageView.setImageBitmap(bitmap);
+            }
         }
     }
 }
