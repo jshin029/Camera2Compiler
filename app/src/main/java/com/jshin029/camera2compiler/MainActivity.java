@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
     {
         String filename = et_name.getText().toString();
         String fileName = filename + ".txt";
-       File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath(), fileName);
+        File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath(), fileName);
 
 
         try{
@@ -142,46 +142,16 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(),"No text detected",Toast.LENGTH_LONG).show();
         }
         else
-        {
+        {   StringBuilder completeText = new StringBuilder();
             for(FirebaseVisionText.TextBlock block:firebaseVisionText.getTextBlocks())
             {
                 String text = block.getText();
                 detectedText.add(block.getText());
-                textView.setText(text);
+                completeText.append(text);
             }
+            textView.setText(completeText);
         }
     }
-//    private void process_text(FirebaseVisionText firebaseVisionText, String filename)
-//    {
-//        String fileName = filename + ".txt";
-//        File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath(), fileName);
-//
-//        List<FirebaseVisionText.TextBlock> blocks = firebaseVisionText.getTextBlocks();
-//        if(blocks.size()==0)
-//        {
-//            Toast.makeText(getApplicationContext(),"No text detected",Toast.LENGTH_LONG).show();
-//        }
-//        else
-//        {
-//
-//                try{
-//                    for(FirebaseVisionText.TextBlock block:firebaseVisionText.getTextBlocks()) {
-//                        FileOutputStream fos = new FileOutputStream(file);
-//                        String text = block.getText();
-//                        fos.write(text.getBytes());
-//                        fos.close();
-//                        textView.setText(text);
-//                    }
-//                    Toast.makeText(this, "Saved!", Toast.LENGTH_SHORT).show();
-//                } catch (FileNotFoundException e){
-//                    e.printStackTrace();
-//                    Toast.makeText(this, "File not found!", Toast.LENGTH_SHORT).show();
-//                } catch(IOException e){
-//                    e.printStackTrace();
-//                    Toast.makeText(this, "Error saving!", Toast.LENGTH_SHORT).show();
-//                }
-//        }
-//    }
 
     static final int REQUEST_IMAGE_CAPTURE = 1;
     static final int REQUEST_IMAGE_GALLERY = 2;
@@ -232,62 +202,3 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 }
-
-//    public void detect(View v)
-//    {
-//        if(bitmap==null)
-//        {
-//            Toast.makeText(getApplicationContext(),"Bitmap is null",Toast.LENGTH_LONG).show();
-//        }
-//        else
-//        {
-//            final FirebaseVisionImage firebaseVisionImage = FirebaseVisionImage.fromBitmap(bitmap);
-//
-//            FirebaseVisionTextRecognizer TextRecognizer = FirebaseVision.getInstance().getOnDeviceTextRecognizer();
-//
-//            TextRecognizer.processImage(firebaseVisionImage)
-//                    .addOnSuccessListener(new OnSuccessListener<FirebaseVisionText>() {
-//                        @Override
-//                        public void onSuccess(FirebaseVisionText firebaseVisionText) {
-//                            process_text(firebaseVisionText);
-//                        }
-//                    });
-//        }
-//    }
-//
-//    private void process_text(FirebaseVisionText firebaseVisionText)
-//    {
-//        List<FirebaseVisionText.TextBlock> blocks = firebaseVisionText.getTextBlocks();
-//        if(blocks.size()==0)
-//        {
-//            Toast.makeText(getApplicationContext(),"No text detected",Toast.LENGTH_LONG).show();
-//        }
-//        else
-//        {
-//            for(FirebaseVisionText.TextBlock block:firebaseVisionText.getTextBlocks())
-//            {
-//
-//                String text = block.getText();
-//                textView.setText(text);
-//            }
-//        }
-//    }
-
-//    private void saveTextasFile(String filename, String content){
-//        String fileName = filename + ".txt";
-//
-//        File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath(), fileName);
-//
-//        try{
-//            FileOutputStream fos = new FileOutputStream(file);
-//            fos.write(content.getBytes());
-//            fos.close();
-//            Toast.makeText(this, "Saved!", Toast.LENGTH_SHORT).show();
-//        } catch (FileNotFoundException e){
-//            e.printStackTrace();
-//            Toast.makeText(this, "File not found!", Toast.LENGTH_SHORT).show();
-//        } catch(IOException e){
-//            e.printStackTrace();
-//            Toast.makeText(this, "Error saving!", Toast.LENGTH_SHORT).show();
-//        }
-//    }
