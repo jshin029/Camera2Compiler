@@ -4,31 +4,39 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/mainBackground"
     tools:context=".MainActivity">
 
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="match_parent"
-        android:layout_height="198dp"
+        android:layout_width="359dp"
+        android:layout_height="184dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/border"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         tools:ignore="ContentDescription" />
 
     <Button
         android:id="@+id/button"
-        android:layout_width="114dp"
-        android:layout_height="wrap_content"
+        android:layout_width="29dp"
+        android:layout_height="31dp"
         android:layout_below="@+id/imageView"
         android:layout_alignParentStart="true"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:background="@drawable/gallery_icon"
         android:onClick="pick_image"
-        android:text="@string/Gallery"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button2" />
+        app:layout_constraintStart_toEndOf="@+id/cameraBtn"
+        app:layout_constraintTop_toBottomOf="@+id/et_name" />
 
     <Button
         android:id="@+id/button2"
-        android:layout_width="wrap_content"
+        android:layout_width="119dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/imageView"
         android:layout_alignParentEnd="true"
@@ -37,17 +45,17 @@
         android:onClick="detect"
         android:text="@string/Detect_Text"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_name" />
+        app:layout_constraintTop_toBottomOf="@+id/compileBtn" />
 
     <Button
         android:id="@+id/cameraBtn"
-        android:layout_width="116dp"
-        android:layout_height="wrap_content"
+        android:layout_width="29dp"
+        android:layout_height="29dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="@string/Camera"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button" />
+        android:background="@drawable/camera_icon"
+        app:layout_constraintStart_toEndOf="@+id/saveBtn"
+        app:layout_constraintTop_toBottomOf="@+id/et_name" />
 
     <Button
         android:id="@+id/compileBtn"
@@ -59,29 +67,52 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cameraBtn" />
 
+    <Button
+        android:id="@+id/saveBtn"
+        android:layout_width="27dp"
+        android:layout_height="29dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/save_icon"
+        android:onClick="save"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_name" />
+
     <TextView
         android:id="@+id/textView"
         android:layout_width="199dp"
         android:layout_height="211dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:text=""
+        android:layout_marginEnd="28dp"
+        android:layout_marginBottom="60dp"
+        android:background="@drawable/border"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="@string/Preview"
+        android:textColor="#000000"
+        app:layout_constraintBottom_toTopOf="@+id/textView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/et_name" />
+
     <EditText
         android:id="@+id/et_name"
-        android:layout_width="wrap_content"
+        android:layout_width="108dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:ems="10"
+        android:hint="@string/File_Name"
         android:inputType="text"
-        android:text="@string/File_Name"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView"
         tools:ignore="Autofill,LabelFor" />
-
 
 
 

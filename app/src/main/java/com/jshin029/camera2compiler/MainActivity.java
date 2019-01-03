@@ -28,6 +28,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -37,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     TextView textView;
     Bitmap bitmap;
     EditText et_name;
+    ArrayList<String> detectedText = new ArrayList<>();
 
 
     @Override
@@ -87,11 +89,34 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void save(View v)
+    {
+        String filename = et_name.getText().toString();
+        String fileName = filename + ".txt";
+       File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath(), fileName);
+
+
+        try{
+                        FileOutputStream fos = new FileOutputStream(file);
+                        for (int i = 0; i <detectedText.size(); i++){
+                            fos.write(detectedText.get(i).getBytes());
+                        }
+                        fos.close();
+                        Toast.makeText(this, "Saved!", Toast.LENGTH_SHORT).show();
+                } catch (FileNotFoundException e){
+                    e.printStackTrace();
+                    Toast.makeText(this, "File not found!", Toast.LENGTH_SHORT).show();
+                } catch(IOException e){
+                    e.printStackTrace();
+                    Toast.makeText(this, "Error saving!", Toast.LENGTH_SHORT).show();
+                }
+
+    }
     public void detect(View v)
     {
         if(bitmap==null)
         {
-            Toast.makeText(getApplicationContext(),"Bitmap is null",Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(),"No image uploaded",Toast.LENGTH_LONG).show();
         }
         else
         {
@@ -103,18 +128,14 @@ public class MainActivity extends AppCompatActivity {
                     .addOnSuccessListener(new OnSuccessListener<FirebaseVisionText>() {
                         @Override
                         public void onSuccess(FirebaseVisionText firebaseVisionText) {
-                            String filename = et_name.getText().toString();
-                            process_text(firebaseVisionText, filename);
+                            process_text(firebaseVisionText);
                         }
                     });
         }
     }
 
-    private void process_text(FirebaseVisionText firebaseVisionText, String filename)
+        private void process_text(FirebaseVisionText firebaseVisionText)
     {
-        String fileName = filename + ".txt";
-        File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath(), fileName);
-
         List<FirebaseVisionText.TextBlock> blocks = firebaseVisionText.getTextBlocks();
         if(blocks.size()==0)
         {
@@ -122,25 +143,45 @@ public class MainActivity extends AppCompatActivity {
         }
         else
         {
-
-                try{
-                    for(FirebaseVisionText.TextBlock block:firebaseVisionText.getTextBlocks()) {
-                        FileOutputStream fos = new FileOutputStream(file);
-                        String text = block.getText();
-                        fos.write(text.getBytes());
-                        fos.close();
-                        textView.setText(text);
-                    }
-                    Toast.makeText(this, "Saved!", Toast.LENGTH_SHORT).show();
-                } catch (FileNotFoundException e){
-                    e.printStackTrace();
-                    Toast.makeText(this, "File not found!", Toast.LENGTH_SHORT).show();
-                } catch(IOException e){
-                    e.printStackTrace();
-                    Toast.makeText(this, "Error saving!", Toast.LENGTH_SHORT).show();
-                }
+            for(FirebaseVisionText.TextBlock block:firebaseVisionText.getTextBlocks())
+            {
+                String text = block.getText();
+                detectedText.add(block.getText());
+                textView.setText(text);
+            }
         }
     }
+//    private void process_text(FirebaseVisionText firebaseVisionText, String filename)
+//    {
+//        String fileName = filename + ".txt";
+//        File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath(), fileName);
+//
+//        List<FirebaseVisionText.TextBlock> blocks = firebaseVisionText.getTextBlocks();
+//        if(blocks.size()==0)
+//        {
+//            Toast.makeText(getApplicationContext(),"No text detected",Toast.LENGTH_LONG).show();
+//        }
+//        else
+//        {
+//
+//                try{
+//                    for(FirebaseVisionText.TextBlock block:firebaseVisionText.getTextBlocks()) {
+//                        FileOutputStream fos = new FileOutputStream(file);
+//                        String text = block.getText();
+//                        fos.write(text.getBytes());
+//                        fos.close();
+//                        textView.setText(text);
+//                    }
+//                    Toast.makeText(this, "Saved!", Toast.LENGTH_SHORT).show();
+//                } catch (FileNotFoundException e){
+//                    e.printStackTrace();
+//                    Toast.makeText(this, "File not found!", Toast.LENGTH_SHORT).show();
+//                } catch(IOException e){
+//                    e.printStackTrace();
+//                    Toast.makeText(this, "Error saving!", Toast.LENGTH_SHORT).show();
+//                }
+//        }
+//    }
 
     static final int REQUEST_IMAGE_CAPTURE = 1;
     static final int REQUEST_IMAGE_GALLERY = 2;

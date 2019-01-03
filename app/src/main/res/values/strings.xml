@@ -2,8 +2,7 @@
     <string name="app_name">Camera2Compiler</string>
     <string name="Gallery">Gallery</string>
     <string name="Detect_Text">Detect Text</string>
-    <string name="Camera">Camera</string>
     <string name="Compiler">Compiler</string>
     <string name="File_Name">File Name</string>
-
+    <string name="Preview">Preview</string>
 </resources>
